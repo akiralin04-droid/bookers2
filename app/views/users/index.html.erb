@@ -1,0 +1,41 @@
+<div class="container px-5 px-sm-0">
+  <div class="row">
+    
+    <!-- ★★★ 左側：部分テンプレート呼び出し ★★★ -->
+    <!-- フォルダ名(books)を指定して呼び出します -->
+    <%= render 'books/list', user: @user, book: @book %>
+
+    <!-- ★★★ 右側：Users一覧 ★★★ -->
+    <div class="col-md-8 offset-md-1">
+      <h2>Users</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>image</th>
+            <th>name</th>
+            <th colspan="3"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @users.each do |user| %>
+            <tr>
+              <td>
+                <!-- プロフィール画像 -->
+                <%= image_tag user.get_profile_image(80,80) %>
+              </td>
+              <td>
+                <!-- ユーザー名 -->
+                <%= user.name %>
+              </td>
+              <td>
+                <!-- 詳細画面へのリンク -->
+                <%= link_to "Show", user_path(user) %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>

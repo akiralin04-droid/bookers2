@@ -1,0 +1,828 @@
+
+UsersController
+  GET #edit
+    ログインユーザーの場合
+[32m      レスポンスが成功すること[0m
+[32m      @userが正しく設定されていること[0m
+
+Bookモデルのテスト
+  バリデーションのテスト
+    titleカラム
+[32m      空欄でないこと[0m
+    bodyカラム
+[32m      空欄でないこと[0m
+[32m      200文字以下であること: 200文字は〇[0m
+[32m      200文字以下であること: 201文字は×[0m
+  アソシエーションのテスト
+    Userモデルとの関係
+[32m      N:1となっている[0m
+
+Userモデルのテスト
+  バリデーションのテスト
+    nameカラム
+[32m      空欄でないこと[0m
+[32m      2文字以上であること: 1文字は×[0m
+[32m      2文字以上であること: 2文字は〇[0m
+[32m      20文字以下であること: 20文字は〇[0m
+[32m      20文字以下であること: 21文字は×[0m
+[32m      一意性があること[0m
+    introductionカラム
+[32m      50文字以下であること: 50文字は〇[0m
+[32m      50文字以下であること: 51文字は×[0m
+  アソシエーションのテスト
+    Bookモデルとの関係
+[32m      1:Nとなっている[0m
+
+[STEP1] ユーザログイン前のテスト
+  トップ画面のテスト
+    表示内容の確認
+[31m      URLが正しい (FAILED - 1)[0m
+[31m      Log inリンクが表示される: 青色のボタンの表示が「Log in」である (FAILED - 2)[0m
+[31m      Log inリンクの内容が正しい (FAILED - 3)[0m
+[31m      Sign upリンクが表示される: 緑色のボタンの表示が「Sign up」である (FAILED - 4)[0m
+[31m      Sign upリンクの内容が正しい (FAILED - 5)[0m
+  アバウト画面のテスト
+    表示内容の確認
+[31m      URLが正しい (FAILED - 6)[0m
+  ヘッダーのテスト: ログインしていない場合
+    表示内容の確認
+[31m      Bookersリンクが表示される: 左上から1番目のリンクが「Bookers」である (FAILED - 7)[0m
+[31m      Homeリンクが表示される: 左上から2番目のリンクが「Home」である (FAILED - 8)[0m
+[31m      Aboutリンクが表示される: 左上から3番目のリンクが「About」である (FAILED - 9)[0m
+[31m      Sign upリンクが表示される: 左上から4番目のリンクが「Sign up」である (FAILED - 10)[0m
+[31m      Log inリンクが表示される: 左上から5番目のリンクが「Log in」である (FAILED - 11)[0m
+    リンクの内容を確認
+[31m      Bookersを押すと、トップ画面に遷移する (FAILED - 12)[0m
+[31m      Homeを押すと、トップ画面に遷移する (FAILED - 13)[0m
+[31m      Aboutを押すと、アバウト画面に遷移する (FAILED - 14)[0m
+[31m      Sign upを押すと、新規登録画面に遷移する (FAILED - 15)[0m
+[31m      Log inを押すと、ログイン画面に遷移する (FAILED - 16)[0m
+  ユーザ新規登録のテスト
+    表示内容の確認
+[31m      URLが正しい (FAILED - 17)[0m
+[31m      「Sign up」と表示される (FAILED - 18)[0m
+[31m      nameフォームが表示される (FAILED - 19)[0m
+[31m      email_addressフォームが表示される (FAILED - 20)[0m
+[31m      passwordフォームが表示される (FAILED - 21)[0m
+[31m      password_confirmationフォームが表示される (FAILED - 22)[0m
+[31m      Sign upボタンが表示される (FAILED - 23)[0m
+    新規登録成功のテスト
+[31m      正しく新規登録される (FAILED - 24)[0m
+[31m      新規登録後のリダイレクト先が、新規登録できたユーザの詳細画面になっている (FAILED - 25)[0m
+  ユーザログイン
+    表示内容の確認
+[32m      URLが正しい[0m
+[32m      「Log in」と表示される[0m
+[32m      nameフォームが表示される[0m
+[32m      passwordフォームが表示される[0m
+[32m      Log inボタンが表示される[0m
+[32m      email_addressフォームは表示されない[0m
+    ログイン成功のテスト
+[32m      ログイン後のリダイレクト先が、ログインしたユーザの詳細画面になっている[0m
+    ログイン失敗のテスト
+[32m      ログインに失敗し、ログイン画面にリダイレクトされる[0m
+  ヘッダーのテスト: ログインしている場合
+    ヘッダーの表示を確認
+[32m      Bookersリンクが表示される: 左上から1番目のリンクが「Bookers」である[0m
+[32m      Homeリンクが表示される: 左上から2番目のリンクが「Home」である[0m
+[32m      Usersリンクが表示される: 左上から3番目のリンクが「Users」である[0m
+[32m      Booksリンクが表示される: 左上から4番目のリンクが「Books」である[0m
+[32m      Log outリンクが表示される: 左上から5番目のリンクが「Log out」である[0m
+  ユーザログアウトのテスト
+    ログアウト機能のテスト
+[31m      正しくログアウトできている: ログアウト後のリダイレクト先においてAbout画面へのリンクが存在する (FAILED - 26)[0m
+[31m      ログアウト後のリダイレクト先が、トップになっている (FAILED - 27)[0m
+
+[STEP2] ユーザログイン後のテスト
+  ヘッダーのテスト: ログインしている場合
+    リンクの内容を確認: ※logoutは『ユーザログアウトのテスト』でテスト済みになります。
+[32m      Homeを押すと、自分のユーザ詳細画面に遷移する[0m
+[32m      Usersを押すと、ユーザ一覧画面に遷移する[0m
+[32m      Booksを押すと、投稿一覧画面に遷移する[0m
+  投稿一覧画面のテスト
+    表示内容の確認
+[32m      URLが正しい[0m
+[32m      自分と他人の画像のリンク先が正しい[0m
+[32m      自分の投稿と他人の投稿のタイトルのリンク先がそれぞれ正しい[0m
+[32m      自分の投稿と他人の投稿のオピニオンが表示される[0m
+    サイドバーの確認
+[32m      自分の名前と紹介文が表示される[0m
+[32m      自分のユーザ編集画面へのリンクが存在する[0m
+[32m      「New book」と表示される[0m
+[32m      titleフォームが表示される[0m
+[32m      titleフォームに値が入っていない[0m
+[32m      bodyフォームが表示される[0m
+[32m      bodyフォームに値が入っていない[0m
+[32m      Create Bookボタンが表示される[0m
+    投稿成功のテスト
+[32m      自分の新しい投稿が正しく保存される[0m
+[32m      リダイレクト先が、保存できた投稿の詳細画面になっている[0m
+  自分の投稿詳細画面のテスト
+    表示内容の確認
+[32m      URLが正しい[0m
+[32m      「Book detail」と表示される[0m
+[32m      ユーザ画像・名前のリンク先が正しい[0m
+[32m      投稿のtitleが表示される[0m
+[32m      投稿のbodyが表示される[0m
+[32m      投稿の編集リンクが表示される[0m
+[32m      投稿の削除リンクが表示される[0m
+    サイドバーの確認
+[32m      自分の名前と紹介文が表示される[0m
+[32m      自分のユーザ編集画面へのリンクが存在する[0m
+[32m      「New book」と表示される[0m
+[32m      titleフォームが表示される[0m
+[32m      titleフォームに値が入っていない[0m
+[32m      bodyフォームが表示される[0m
+[32m      bodyフォームに値が入っていない[0m
+[32m      Create Bookボタンが表示される[0m
+    投稿成功のテスト
+[32m      自分の新しい投稿が正しく保存される[0m
+    編集リンクのテスト
+[32m      編集画面に遷移する[0m
+    削除リンクのテスト
+[32m      application.html.erbにjavascript_pack_tagを含んでいる[0m
+[32m      正しく削除される[0m
+[32m      リダイレクト先が、投稿一覧画面になっている[0m
+  自分の投稿編集画面のテスト
+    表示の確認
+[32m      URLが正しい[0m
+[32m      「Editing Book」と表示される[0m
+[32m      title編集フォームが表示される[0m
+[32m      body編集フォームが表示される[0m
+[32m      Update Bookボタンが表示される[0m
+[32m      Showリンクが表示される[0m
+[32m      Backリンクが表示される[0m
+    編集成功のテスト
+[32m      titleが正しく更新される[0m
+[32m      bodyが正しく更新される[0m
+[32m      リダイレクト先が、更新した投稿の詳細画面になっている[0m
+  ユーザ一覧画面のテスト
+    表示内容の確認
+[32m      URLが正しい[0m
+[32m      自分と他人の画像が表示される: fallbackの画像がサイドバーの1つ＋一覧(2人)の2つの計3つ存在する[0m
+[32m      自分と他人の名前がそれぞれ表示される[0m
+[32m      自分と他人のshowリンクがそれぞれ表示される[0m
+    サイドバーの確認
+[32m      自分の名前と紹介文が表示される[0m
+[32m      自分のユーザ編集画面へのリンクが存在する[0m
+[32m      「New book」と表示される[0m
+[32m      titleフォームが表示される[0m
+[32m      titleフォームに値が入っていない[0m
+[32m      bodyフォームが表示される[0m
+[32m      bodyフォームに値が入っていない[0m
+[32m      Create Bookボタンが表示される[0m
+  自分のユーザ詳細画面のテスト
+    表示の確認
+[32m      URLが正しい[0m
+[32m      投稿一覧のユーザ画像のリンク先が正しい[0m
+[32m      投稿一覧に自分の投稿のtitleが表示され、リンクが正しい[0m
+[32m      投稿一覧に自分の投稿のbodyが表示される[0m
+[32m      他人の投稿は表示されない[0m
+    サイドバーの確認
+[32m      自分の名前と紹介文が表示される[0m
+[32m      自分のユーザ編集画面へのリンクが存在する[0m
+[32m      「New book」と表示される[0m
+[32m      titleフォームが表示される[0m
+[32m      titleフォームに値が入っていない[0m
+[32m      bodyフォームが表示される[0m
+[32m      bodyフォームに値が入っていない[0m
+[32m      Create Bookボタンが表示される[0m
+  自分のユーザ情報編集画面のテスト
+    表示の確認
+[32m      URLが正しい[0m
+[32m      名前編集フォームに自分の名前が表示される[0m
+[32m      画像編集フォームが表示される[0m
+[32m      自己紹介編集フォームに自分の自己紹介文が表示される[0m
+[32m      Update Userボタンが表示される[0m
+    更新成功のテスト
+[32m      nameが正しく更新される[0m
+[32m      introductionが正しく更新される[0m
+[32m      リダイレクト先が、自分のユーザ詳細画面になっている[0m
+
+[STEP3] 仕上げのテスト
+  サクセスメッセージのテスト
+[31m    ユーザ新規登録成功時 (FAILED - 28)[0m
+[32m    ユーザログイン成功時[0m
+[31m    ユーザログアウト成功時 (FAILED - 29)[0m
+[32m    ユーザのプロフィール情報更新成功時[0m
+[32m    投稿データの新規投稿成功時: 投稿一覧画面から行います。[0m
+[32m    投稿データの更新成功時[0m
+  処理失敗時のテスト
+    ユーザ新規登録失敗: nameを1文字にする
+[31m      新規登録されない (FAILED - 30)[0m
+[31m      新規登録画面を表示しており、フォームの内容が正しい (FAILED - 31)[0m
+[31m      バリデーションエラーが表示される (FAILED - 32)[0m
+    ユーザのプロフィール情報編集失敗: nameを1文字にする
+[32m      更新されない[0m
+[32m      ユーザ編集画面を表示しており、フォームの内容が正しい[0m
+[32m      バリデーションエラーが表示される[0m
+    投稿データの新規投稿失敗: 投稿一覧画面から行い、titleを空にする
+[32m      投稿が保存されない[0m
+[32m      投稿一覧画面を表示している[0m
+[32m      新規投稿フォームの内容が正しい[0m
+[32m      バリデーションエラーが表示される[0m
+    投稿データの更新失敗: titleを空にする
+[32m      投稿が更新されない[0m
+[32m      投稿編集画面を表示しており、フォームの内容が正しい[0m
+[32m      エラーメッセージが表示される[0m
+  ログインしていない場合のアクセス制限のテスト: アクセスできず、ログイン画面に遷移する
+[32m    ユーザ一覧画面[0m
+[32m    ユーザ詳細画面[0m
+[32m    ユーザ情報編集画面[0m
+[32m    投稿一覧画面[0m
+[32m    投稿詳細画面[0m
+[32m    投稿編集画面[0m
+  他人の画面のテスト
+    他人の投稿詳細画面のテスト
+      表示内容の確認
+[32m        URLが正しい[0m
+[32m        「Book detail」と表示される[0m
+[32m        ユーザ画像・名前のリンク先が正しい[0m
+[32m        投稿のtitleが表示される[0m
+[32m        投稿のopinionが表示される[0m
+[32m        投稿の編集リンクが表示されない[0m
+[32m        投稿の削除リンクが表示されない[0m
+      サイドバーの確認
+[32m        他人の名前と紹介文が表示される[0m
+[32m        他人のユーザ編集画面へのリンクが存在する[0m
+[32m        自分の名前と紹介文は表示されない[0m
+[32m        自分のユーザ編集画面へのリンクは存在しない[0m
+    他人の投稿編集画面
+[32m      遷移できず、投稿一覧画面にリダイレクトされる[0m
+    他人のユーザ詳細画面のテスト
+      表示の確認
+[32m        URLが正しい[0m
+[32m        投稿一覧のユーザ画像のリンク先が正しい[0m
+[32m        投稿一覧に他人の投稿のtitleが表示され、リンクが正しい[0m
+[32m        投稿一覧に他人の投稿のopinionが表示される[0m
+[32m        自分の投稿は表示されない[0m
+      サイドバーの確認
+[32m        他人の名前と紹介文が表示される[0m
+[32m        他人のユーザ編集画面へのリンクが存在する[0m
+[32m        自分の名前と紹介文は表示されない[0m
+[32m        自分のユーザ編集画面へのリンクは存在しない[0m
+    他人のユーザ情報編集画面
+[32m      遷移できず、自分のユーザ詳細画面にリダイレクトされる[0m
+  グリッドシステムのテスト: container, row, col-md-〇を正しく使えている
+[32m    ユーザ一覧画面[0m
+[32m    ユーザ詳細画面[0m
+[32m    投稿一覧画面[0m
+[32m    投稿詳細画面[0m
+  アイコンのテスト
+    トップ画面
+[31m      本のアイコンが表示される (FAILED - 33)[0m
+    アバウト画面
+[31m      本のアイコンが表示される (FAILED - 34)[0m
+    ヘッダー: ログインしていない場合
+[31m      Homeリンクのアイコンが表示される (FAILED - 35)[0m
+[31m      Aboutリンクのアイコンが表示される (FAILED - 36)[0m
+[31m      Sign upリンクのアイコンが表示される (FAILED - 37)[0m
+[31m      Log inリンクのアイコンが表示される (FAILED - 38)[0m
+    ヘッダー: ログインしている場合
+[32m      Homeリンクのアイコンが表示される[0m
+[32m      Usersリンクのアイコンが表示される[0m
+[32m      Booksリンクのアイコンが表示される[0m
+[32m      Log outリンクのアイコンが表示される[0m
+    サイドバー
+[32m      ユーザ一覧画面でレンチアイコンが表示される[0m
+[32m      ユーザ詳細画面でレンチアイコンが表示される[0m
+[32m      投稿一覧画面でレンチアイコンが表示される[0m
+[32m      投稿詳細画面でレンチアイコンが表示される[0m
+
+Failures:
+
+  1) [STEP1] ユーザログイン前のテスト トップ画面のテスト 表示内容の確認 URLが正しい
+     [31mFailure/Error:[0m
+     [31m  class HomesController < ApplicationController  allow_unauthenticated_access only: %i[ top about ][0m
+     [31m    allow_unauthenticated_access only: %i[ top about ][0m
+     [31m  [0m
+     [31m    def top[0m
+     [31m    end[0m
+     [31m  [0m
+     [31m    def about[0m
+     [31m    end[0m
+     [31m[0m
+     [31mNoMethodError:[0m
+     [31m  undefined method `allow_unauthenticated_access' for main[0m
+     [36m# ./app/controllers/homes_controller.rb:1:in `<main>'[0m
+     [36m# ./spec/system/01_before_login_spec.rb:6:in `block (3 levels) in <main>'[0m
+
+  2) [STEP1] ユーザログイン前のテスト トップ画面のテスト 表示内容の確認 Log inリンクが表示される: 青色のボタンの表示が「Log in」である
+     [31mFailure/Error:[0m
+     [31m  class HomesController < ApplicationController  allow_unauthenticated_access only: %i[ top about ][0m
+     [31m    allow_unauthenticated_access only: %i[ top about ][0m
+     [31m  [0m
+     [31m    def top[0m
+     [31m    end[0m
+     [31m  [0m
+     [31m    def about[0m
+     [31m    end[0m
+     [31m[0m
+     [31mNoMethodError:[0m
+     [31m  undefined method `allow_unauthenticated_access' for main[0m
+     [36m# ./app/controllers/homes_controller.rb:1:in `<main>'[0m
+     [36m# ./spec/system/01_before_login_spec.rb:6:in `block (3 levels) in <main>'[0m
+
+  3) [STEP1] ユーザログイン前のテスト トップ画面のテスト 表示内容の確認 Log inリンクの内容が正しい
+     [31mFailure/Error:[0m
+     [31m  class HomesController < ApplicationController  allow_unauthenticated_access only: %i[ top about ][0m
+     [31m    allow_unauthenticated_access only: %i[ top about ][0m
+     [31m  [0m
+     [31m    def top[0m
+     [31m    end[0m
+     [31m  [0m
+     [31m    def about[0m
+     [31m    end[0m
+     [31m[0m
+     [31mNoMethodError:[0m
+     [31m  undefined method `allow_unauthenticated_access' for main[0m
+     [36m# ./app/controllers/homes_controller.rb:1:in `<main>'[0m
+     [36m# ./spec/system/01_before_login_spec.rb:6:in `block (3 levels) in <main>'[0m
+
+  4) [STEP1] ユーザログイン前のテスト トップ画面のテスト 表示内容の確認 Sign upリンクが表示される: 緑色のボタンの表示が「Sign up」である
+     [31mFailure/Error:[0m
+     [31m  class HomesController < ApplicationController  allow_unauthenticated_access only: %i[ top about ][0m
+     [31m    allow_unauthenticated_access only: %i[ top about ][0m
+     [31m  [0m
+     [31m    def top[0m
+     [31m    end[0m
+     [31m  [0m
+     [31m    def about[0m
+     [31m    end[0m
+     [31m[0m
+     [31mNoMethodError:[0m
+     [31m  undefined method `allow_unauthenticated_access' for main[0m
+     [36m# ./app/controllers/homes_controller.rb:1:in `<main>'[0m
+     [36m# ./spec/system/01_before_login_spec.rb:6:in `block (3 levels) in <main>'[0m
+
+  5) [STEP1] ユーザログイン前のテスト トップ画面のテスト 表示内容の確認 Sign upリンクの内容が正しい
+     [31mFailure/Error:[0m
+     [31m  class HomesController < ApplicationController  allow_unauthenticated_access only: %i[ top about ][0m
+     [31m    allow_unauthenticated_access only: %i[ top about ][0m
+     [31m  [0m
+     [31m    def top[0m
+     [31m    end[0m
+     [31m  [0m
+     [31m    def about[0m
+     [31m    end[0m
+     [31m[0m
+     [31mNoMethodError:[0m
+     [31m  undefined method `allow_unauthenticated_access' for main[0m
+     [36m# ./app/controllers/homes_controller.rb:1:in `<main>'[0m
+     [36m# ./spec/system/01_before_login_spec.rb:6:in `block (3 levels) in <main>'[0m
+
+  6) [STEP1] ユーザログイン前のテスト アバウト画面のテスト 表示内容の確認 URLが正しい
+     [31mFailure/Error:[0m
+     [31m  class HomesController < ApplicationController  allow_unauthenticated_access only: %i[ top about ][0m
+     [31m    allow_unauthenticated_access only: %i[ top about ][0m
+     [31m  [0m
+     [31m    def top[0m
+     [31m    end[0m
+     [31m  [0m
+     [31m    def about[0m
+     [31m    end[0m
+     [31m[0m
+     [31mNoMethodError:[0m
+     [31m  undefined method `allow_unauthenticated_access' for main[0m
+     [36m# ./app/controllers/homes_controller.rb:1:in `<main>'[0m
+     [36m# ./spec/system/01_before_login_spec.rb:34:in `block (3 levels) in <main>'[0m
+
+  7) [STEP1] ユーザログイン前のテスト ヘッダーのテスト: ログインしていない場合 表示内容の確認 Bookersリンクが表示される: 左上から1番目のリンクが「Bookers」である
+     [31mFailure/Error:[0m
+     [31m  class HomesController < ApplicationController  allow_unauthenticated_access only: %i[ top about ][0m
+     [31m    allow_unauthenticated_access only: %i[ top about ][0m
+     [31m  [0m
+     [31m    def top[0m
+     [31m    end[0m
+     [31m  [0m
+     [31m    def about[0m
+     [31m    end[0m
+     [31m[0m
+     [31mNoMethodError:[0m
+     [31m  undefined method `allow_unauthenticated_access' for main[0m
+     [36m# ./app/controllers/homes_controller.rb:1:in `<main>'[0m
+     [36m# ./spec/system/01_before_login_spec.rb:46:in `block (3 levels) in <main>'[0m
+
+  8) [STEP1] ユーザログイン前のテスト ヘッダーのテスト: ログインしていない場合 表示内容の確認 Homeリンクが表示される: 左上から2番目のリンクが「Home」である
+     [31mFailure/Error:[0m
+     [31m  class HomesController < ApplicationController  allow_unauthenticated_access only: %i[ top about ][0m
+     [31m    allow_unauthenticated_access only: %i[ top about ][0m
+     [31m  [0m
+     [31m    def top[0m
+     [31m    end[0m
+     [31m  [0m
+     [31m    def about[0m
+     [31m    end[0m
+     [31m[0m
+     [31mNoMethodError:[0m
+     [31m  undefined method `allow_unauthenticated_access' for main[0m
+     [36m# ./app/controllers/homes_controller.rb:1:in `<main>'[0m
+     [36m# ./spec/system/01_before_login_spec.rb:46:in `block (3 levels) in <main>'[0m
+
+  9) [STEP1] ユーザログイン前のテスト ヘッダーのテスト: ログインしていない場合 表示内容の確認 Aboutリンクが表示される: 左上から3番目のリンクが「About」である
+     [31mFailure/Error:[0m
+     [31m  class HomesController < ApplicationController  allow_unauthenticated_access only: %i[ top about ][0m
+     [31m    allow_unauthenticated_access only: %i[ top about ][0m
+     [31m  [0m
+     [31m    def top[0m
+     [31m    end[0m
+     [31m  [0m
+     [31m    def about[0m
+     [31m    end[0m
+     [31m[0m
+     [31mNoMethodError:[0m
+     [31m  undefined method `allow_unauthenticated_access' for main[0m
+     [36m# ./app/controllers/homes_controller.rb:1:in `<main>'[0m
+     [36m# ./spec/system/01_before_login_spec.rb:46:in `block (3 levels) in <main>'[0m
+
+  10) [STEP1] ユーザログイン前のテスト ヘッダーのテスト: ログインしていない場合 表示内容の確認 Sign upリンクが表示される: 左上から4番目のリンクが「Sign up」である
+      [31mFailure/Error:[0m
+      [31m  class HomesController < ApplicationController  allow_unauthenticated_access only: %i[ top about ][0m
+      [31m    allow_unauthenticated_access only: %i[ top about ][0m
+      [31m  [0m
+      [31m    def top[0m
+      [31m    end[0m
+      [31m  [0m
+      [31m    def about[0m
+      [31m    end[0m
+      [31m[0m
+      [31mNoMethodError:[0m
+      [31m  undefined method `allow_unauthenticated_access' for main[0m
+      [36m# ./app/controllers/homes_controller.rb:1:in `<main>'[0m
+      [36m# ./spec/system/01_before_login_spec.rb:46:in `block (3 levels) in <main>'[0m
+
+  11) [STEP1] ユーザログイン前のテスト ヘッダーのテスト: ログインしていない場合 表示内容の確認 Log inリンクが表示される: 左上から5番目のリンクが「Log in」である
+      [31mFailure/Error:[0m
+      [31m  class HomesController < ApplicationController  allow_unauthenticated_access only: %i[ top about ][0m
+      [31m    allow_unauthenticated_access only: %i[ top about ][0m
+      [31m  [0m
+      [31m    def top[0m
+      [31m    end[0m
+      [31m  [0m
+      [31m    def about[0m
+      [31m    end[0m
+      [31m[0m
+      [31mNoMethodError:[0m
+      [31m  undefined method `allow_unauthenticated_access' for main[0m
+      [36m# ./app/controllers/homes_controller.rb:1:in `<main>'[0m
+      [36m# ./spec/system/01_before_login_spec.rb:46:in `block (3 levels) in <main>'[0m
+
+  12) [STEP1] ユーザログイン前のテスト ヘッダーのテスト: ログインしていない場合 リンクの内容を確認 Bookersを押すと、トップ画面に遷移する
+      [31mFailure/Error:[0m
+      [31m  class HomesController < ApplicationController  allow_unauthenticated_access only: %i[ top about ][0m
+      [31m    allow_unauthenticated_access only: %i[ top about ][0m
+      [31m  [0m
+      [31m    def top[0m
+      [31m    end[0m
+      [31m  [0m
+      [31m    def about[0m
+      [31m    end[0m
+      [31m[0m
+      [31mNoMethodError:[0m
+      [31m  undefined method `allow_unauthenticated_access' for main[0m
+      [36m# ./app/controllers/homes_controller.rb:1:in `<main>'[0m
+      [36m# ./spec/system/01_before_login_spec.rb:46:in `block (3 levels) in <main>'[0m
+
+  13) [STEP1] ユーザログイン前のテスト ヘッダーのテスト: ログインしていない場合 リンクの内容を確認 Homeを押すと、トップ画面に遷移する
+      [31mFailure/Error:[0m
+      [31m  class HomesController < ApplicationController  allow_unauthenticated_access only: %i[ top about ][0m
+      [31m    allow_unauthenticated_access only: %i[ top about ][0m
+      [31m  [0m
+      [31m    def top[0m
+      [31m    end[0m
+      [31m  [0m
+      [31m    def about[0m
+      [31m    end[0m
+      [31m[0m
+      [31mNoMethodError:[0m
+      [31m  undefined method `allow_unauthenticated_access' for main[0m
+      [36m# ./app/controllers/homes_controller.rb:1:in `<main>'[0m
+      [36m# ./spec/system/01_before_login_spec.rb:46:in `block (3 levels) in <main>'[0m
+
+  14) [STEP1] ユーザログイン前のテスト ヘッダーのテスト: ログインしていない場合 リンクの内容を確認 Aboutを押すと、アバウト画面に遷移する
+      [31mFailure/Error:[0m
+      [31m  class HomesController < ApplicationController  allow_unauthenticated_access only: %i[ top about ][0m
+      [31m    allow_unauthenticated_access only: %i[ top about ][0m
+      [31m  [0m
+      [31m    def top[0m
+      [31m    end[0m
+      [31m  [0m
+      [31m    def about[0m
+      [31m    end[0m
+      [31m[0m
+      [31mNoMethodError:[0m
+      [31m  undefined method `allow_unauthenticated_access' for main[0m
+      [36m# ./app/controllers/homes_controller.rb:1:in `<main>'[0m
+      [36m# ./spec/system/01_before_login_spec.rb:46:in `block (3 levels) in <main>'[0m
+
+  15) [STEP1] ユーザログイン前のテスト ヘッダーのテスト: ログインしていない場合 リンクの内容を確認 Sign upを押すと、新規登録画面に遷移する
+      [31mFailure/Error:[0m
+      [31m  class HomesController < ApplicationController  allow_unauthenticated_access only: %i[ top about ][0m
+      [31m    allow_unauthenticated_access only: %i[ top about ][0m
+      [31m  [0m
+      [31m    def top[0m
+      [31m    end[0m
+      [31m  [0m
+      [31m    def about[0m
+      [31m    end[0m
+      [31m[0m
+      [31mNoMethodError:[0m
+      [31m  undefined method `allow_unauthenticated_access' for main[0m
+      [36m# ./app/controllers/homes_controller.rb:1:in `<main>'[0m
+      [36m# ./spec/system/01_before_login_spec.rb:46:in `block (3 levels) in <main>'[0m
+
+  16) [STEP1] ユーザログイン前のテスト ヘッダーのテスト: ログインしていない場合 リンクの内容を確認 Log inを押すと、ログイン画面に遷移する
+      [31mFailure/Error:[0m
+      [31m  class HomesController < ApplicationController  allow_unauthenticated_access only: %i[ top about ][0m
+      [31m    allow_unauthenticated_access only: %i[ top about ][0m
+      [31m  [0m
+      [31m    def top[0m
+      [31m    end[0m
+      [31m  [0m
+      [31m    def about[0m
+      [31m    end[0m
+      [31m[0m
+      [31mNoMethodError:[0m
+      [31m  undefined method `allow_unauthenticated_access' for main[0m
+      [36m# ./app/controllers/homes_controller.rb:1:in `<main>'[0m
+      [36m# ./spec/system/01_before_login_spec.rb:46:in `block (3 levels) in <main>'[0m
+
+  17) [STEP1] ユーザログイン前のテスト ユーザ新規登録のテスト 表示内容の確認 URLが正しい
+      [31mFailure/Error: visit new_registration_path[0m
+      [31m[0m
+      [31mNameError:[0m
+      [31m  undefined local variable or method `new_registration_path' for #<RSpec::ExampleGroups::STEP1::Nested_4::Nested:0x00007a003a6a8448>[0m
+      [36m# ./spec/system/01_before_login_spec.rb:112:in `block (3 levels) in <main>'[0m
+
+  18) [STEP1] ユーザログイン前のテスト ユーザ新規登録のテスト 表示内容の確認 「Sign up」と表示される
+      [31mFailure/Error: visit new_registration_path[0m
+      [31m[0m
+      [31mNameError:[0m
+      [31m  undefined local variable or method `new_registration_path' for #<RSpec::ExampleGroups::STEP1::Nested_4::Nested:0x00007a003a296698>[0m
+      [36m# ./spec/system/01_before_login_spec.rb:112:in `block (3 levels) in <main>'[0m
+
+  19) [STEP1] ユーザログイン前のテスト ユーザ新規登録のテスト 表示内容の確認 nameフォームが表示される
+      [31mFailure/Error: visit new_registration_path[0m
+      [31m[0m
+      [31mNameError:[0m
+      [31m  undefined local variable or method `new_registration_path' for #<RSpec::ExampleGroups::STEP1::Nested_4::Nested:0x00007a003a2938f8>[0m
+      [36m# ./spec/system/01_before_login_spec.rb:112:in `block (3 levels) in <main>'[0m
+
+  20) [STEP1] ユーザログイン前のテスト ユーザ新規登録のテスト 表示内容の確認 email_addressフォームが表示される
+      [31mFailure/Error: visit new_registration_path[0m
+      [31m[0m
+      [31mNameError:[0m
+      [31m  undefined local variable or method `new_registration_path' for #<RSpec::ExampleGroups::STEP1::Nested_4::Nested:0x00007a003a290b58>[0m
+      [36m# ./spec/system/01_before_login_spec.rb:112:in `block (3 levels) in <main>'[0m
+
+  21) [STEP1] ユーザログイン前のテスト ユーザ新規登録のテスト 表示内容の確認 passwordフォームが表示される
+      [31mFailure/Error: visit new_registration_path[0m
+      [31m[0m
+      [31mNameError:[0m
+      [31m  undefined local variable or method `new_registration_path' for #<RSpec::ExampleGroups::STEP1::Nested_4::Nested:0x00007a003a27dcb0>[0m
+      [36m# ./spec/system/01_before_login_spec.rb:112:in `block (3 levels) in <main>'[0m
+
+  22) [STEP1] ユーザログイン前のテスト ユーザ新規登録のテスト 表示内容の確認 password_confirmationフォームが表示される
+      [31mFailure/Error: visit new_registration_path[0m
+      [31m[0m
+      [31mNameError:[0m
+      [31m  undefined local variable or method `new_registration_path' for #<RSpec::ExampleGroups::STEP1::Nested_4::Nested:0x00007a003a27ae70>[0m
+      [36m# ./spec/system/01_before_login_spec.rb:112:in `block (3 levels) in <main>'[0m
+
+  23) [STEP1] ユーザログイン前のテスト ユーザ新規登録のテスト 表示内容の確認 Sign upボタンが表示される
+      [31mFailure/Error: visit new_registration_path[0m
+      [31m[0m
+      [31mNameError:[0m
+      [31m  undefined local variable or method `new_registration_path' for #<RSpec::ExampleGroups::STEP1::Nested_4::Nested:0x00007a003a278030>[0m
+      [36m# ./spec/system/01_before_login_spec.rb:112:in `block (3 levels) in <main>'[0m
+
+  24) [STEP1] ユーザログイン前のテスト ユーザ新規登録のテスト 新規登録成功のテスト 正しく新規登録される
+      [31mFailure/Error: visit new_registration_path[0m
+      [31m[0m
+      [31mNameError:[0m
+      [31m  undefined local variable or method `new_registration_path' for #<RSpec::ExampleGroups::STEP1::Nested_4::Nested_2:0x00007a003a6a2908>[0m
+      [36m# ./spec/system/01_before_login_spec.rb:112:in `block (3 levels) in <main>'[0m
+
+  25) [STEP1] ユーザログイン前のテスト ユーザ新規登録のテスト 新規登録成功のテスト 新規登録後のリダイレクト先が、新規登録できたユーザの詳細画面になっている
+      [31mFailure/Error: visit new_registration_path[0m
+      [31m[0m
+      [31mNameError:[0m
+      [31m  undefined local variable or method `new_registration_path' for #<RSpec::ExampleGroups::STEP1::Nested_4::Nested_2:0x00007a003a272090>[0m
+      [36m# ./spec/system/01_before_login_spec.rb:112:in `block (3 levels) in <main>'[0m
+
+  26) [STEP1] ユーザログイン前のテスト ユーザログアウトのテスト ログアウト機能のテスト 正しくログアウトできている: ログアウト後のリダイレクト先においてAbout画面へのリンクが存在する
+      [31mFailure/Error:[0m
+      [31m  class HomesController < ApplicationController  allow_unauthenticated_access only: %i[ top about ][0m
+      [31m    allow_unauthenticated_access only: %i[ top about ][0m
+      [31m  [0m
+      [31m    def top[0m
+      [31m    end[0m
+      [31m  [0m
+      [31m    def about[0m
+      [31m    end[0m
+      [31m[0m
+      [31mNoMethodError:[0m
+      [31m  undefined method `allow_unauthenticated_access' for main[0m
+      [36m# ./app/controllers/homes_controller.rb:1:in `<main>'[0m
+      [36m# ./spec/system/01_before_login_spec.rb:254:in `block (3 levels) in <main>'[0m
+
+  27) [STEP1] ユーザログイン前のテスト ユーザログアウトのテスト ログアウト機能のテスト ログアウト後のリダイレクト先が、トップになっている
+      [31mFailure/Error:[0m
+      [31m  class HomesController < ApplicationController  allow_unauthenticated_access only: %i[ top about ][0m
+      [31m    allow_unauthenticated_access only: %i[ top about ][0m
+      [31m  [0m
+      [31m    def top[0m
+      [31m    end[0m
+      [31m  [0m
+      [31m    def about[0m
+      [31m    end[0m
+      [31m[0m
+      [31mNoMethodError:[0m
+      [31m  undefined method `allow_unauthenticated_access' for main[0m
+      [36m# ./app/controllers/homes_controller.rb:1:in `<main>'[0m
+      [36m# ./spec/system/01_before_login_spec.rb:254:in `block (3 levels) in <main>'[0m
+
+  28) [STEP3] 仕上げのテスト サクセスメッセージのテスト ユーザ新規登録成功時
+      [31mFailure/Error: visit new_registration_path[0m
+      [31m[0m
+      [31mNameError:[0m
+      [31m  undefined local variable or method `new_registration_path' for #<RSpec::ExampleGroups::STEP3::Nested:0x00007a002c676b90>[0m
+      [36m# ./spec/system/03_finishing_touches_spec.rb:13:in `block (3 levels) in <main>'[0m
+
+  29) [STEP3] 仕上げのテスト サクセスメッセージのテスト ユーザログアウト成功時
+      [31mFailure/Error:[0m
+      [31m  class HomesController < ApplicationController  allow_unauthenticated_access only: %i[ top about ][0m
+      [31m    allow_unauthenticated_access only: %i[ top about ][0m
+      [31m  [0m
+      [31m    def top[0m
+      [31m    end[0m
+      [31m  [0m
+      [31m    def about[0m
+      [31m    end[0m
+      [31m[0m
+      [31mNoMethodError:[0m
+      [31m  undefined method `allow_unauthenticated_access' for main[0m
+      [36m# ./app/controllers/homes_controller.rb:1:in `<main>'[0m
+      [36m# ./spec/system/03_finishing_touches_spec.rb:35:in `block (3 levels) in <main>'[0m
+
+  30) [STEP3] 仕上げのテスト 処理失敗時のテスト ユーザ新規登録失敗: nameを1文字にする 新規登録されない
+      [31mFailure/Error: visit new_registration_path[0m
+      [31m[0m
+      [31mNameError:[0m
+      [31m  undefined local variable or method `new_registration_path' for #<RSpec::ExampleGroups::STEP3::Nested_2::Name1:0x00007a002f5af2e0>[0m
+      [36m# ./spec/system/03_finishing_touches_spec.rb:72:in `block (4 levels) in <main>'[0m
+
+  31) [STEP3] 仕上げのテスト 処理失敗時のテスト ユーザ新規登録失敗: nameを1文字にする 新規登録画面を表示しており、フォームの内容が正しい
+      [31mFailure/Error: visit new_registration_path[0m
+      [31m[0m
+      [31mNameError:[0m
+      [31m  undefined local variable or method `new_registration_path' for #<RSpec::ExampleGroups::STEP3::Nested_2::Name1:0x00007a003a24f6f8>[0m
+      [36m# ./spec/system/03_finishing_touches_spec.rb:72:in `block (4 levels) in <main>'[0m
+
+  32) [STEP3] 仕上げのテスト 処理失敗時のテスト ユーザ新規登録失敗: nameを1文字にする バリデーションエラーが表示される
+      [31mFailure/Error: visit new_registration_path[0m
+      [31m[0m
+      [31mNameError:[0m
+      [31m  undefined local variable or method `new_registration_path' for #<RSpec::ExampleGroups::STEP3::Nested_2::Name1:0x00007a003a4e5340>[0m
+      [36m# ./spec/system/03_finishing_touches_spec.rb:72:in `block (4 levels) in <main>'[0m
+
+  33) [STEP3] 仕上げのテスト アイコンのテスト トップ画面 本のアイコンが表示される
+      [31mFailure/Error:[0m
+      [31m  class HomesController < ApplicationController  allow_unauthenticated_access only: %i[ top about ][0m
+      [31m    allow_unauthenticated_access only: %i[ top about ][0m
+      [31m  [0m
+      [31m    def top[0m
+      [31m    end[0m
+      [31m  [0m
+      [31m    def about[0m
+      [31m    end[0m
+      [31m[0m
+      [31mNoMethodError:[0m
+      [31m  undefined method `allow_unauthenticated_access' for main[0m
+      [36m# ./app/controllers/homes_controller.rb:1:in `<main>'[0m
+      [36m# ./spec/system/03_finishing_touches_spec.rb:359:in `block (4 levels) in <main>'[0m
+
+  34) [STEP3] 仕上げのテスト アイコンのテスト アバウト画面 本のアイコンが表示される
+      [31mFailure/Error:[0m
+      [31m  class HomesController < ApplicationController  allow_unauthenticated_access only: %i[ top about ][0m
+      [31m    allow_unauthenticated_access only: %i[ top about ][0m
+      [31m  [0m
+      [31m    def top[0m
+      [31m    end[0m
+      [31m  [0m
+      [31m    def about[0m
+      [31m    end[0m
+      [31m[0m
+      [31mNoMethodError:[0m
+      [31m  undefined method `allow_unauthenticated_access' for main[0m
+      [36m# ./app/controllers/homes_controller.rb:1:in `<main>'[0m
+      [36m# ./spec/system/03_finishing_touches_spec.rb:371:in `block (4 levels) in <main>'[0m
+
+  35) [STEP3] 仕上げのテスト アイコンのテスト ヘッダー: ログインしていない場合 Homeリンクのアイコンが表示される
+      [31mFailure/Error:[0m
+      [31m  class HomesController < ApplicationController  allow_unauthenticated_access only: %i[ top about ][0m
+      [31m    allow_unauthenticated_access only: %i[ top about ][0m
+      [31m  [0m
+      [31m    def top[0m
+      [31m    end[0m
+      [31m  [0m
+      [31m    def about[0m
+      [31m    end[0m
+      [31m[0m
+      [31mNoMethodError:[0m
+      [31m  undefined method `allow_unauthenticated_access' for main[0m
+      [36m# ./app/controllers/homes_controller.rb:1:in `<main>'[0m
+      [36m# ./spec/system/03_finishing_touches_spec.rb:383:in `block (4 levels) in <main>'[0m
+
+  36) [STEP3] 仕上げのテスト アイコンのテスト ヘッダー: ログインしていない場合 Aboutリンクのアイコンが表示される
+      [31mFailure/Error:[0m
+      [31m  class HomesController < ApplicationController  allow_unauthenticated_access only: %i[ top about ][0m
+      [31m    allow_unauthenticated_access only: %i[ top about ][0m
+      [31m  [0m
+      [31m    def top[0m
+      [31m    end[0m
+      [31m  [0m
+      [31m    def about[0m
+      [31m    end[0m
+      [31m[0m
+      [31mNoMethodError:[0m
+      [31m  undefined method `allow_unauthenticated_access' for main[0m
+      [36m# ./app/controllers/homes_controller.rb:1:in `<main>'[0m
+      [36m# ./spec/system/03_finishing_touches_spec.rb:383:in `block (4 levels) in <main>'[0m
+
+  37) [STEP3] 仕上げのテスト アイコンのテスト ヘッダー: ログインしていない場合 Sign upリンクのアイコンが表示される
+      [31mFailure/Error:[0m
+      [31m  class HomesController < ApplicationController  allow_unauthenticated_access only: %i[ top about ][0m
+      [31m    allow_unauthenticated_access only: %i[ top about ][0m
+      [31m  [0m
+      [31m    def top[0m
+      [31m    end[0m
+      [31m  [0m
+      [31m    def about[0m
+      [31m    end[0m
+      [31m[0m
+      [31mNoMethodError:[0m
+      [31m  undefined method `allow_unauthenticated_access' for main[0m
+      [36m# ./app/controllers/homes_controller.rb:1:in `<main>'[0m
+      [36m# ./spec/system/03_finishing_touches_spec.rb:383:in `block (4 levels) in <main>'[0m
+
+  38) [STEP3] 仕上げのテスト アイコンのテスト ヘッダー: ログインしていない場合 Log inリンクのアイコンが表示される
+      [31mFailure/Error:[0m
+      [31m  class HomesController < ApplicationController  allow_unauthenticated_access only: %i[ top about ][0m
+      [31m    allow_unauthenticated_access only: %i[ top about ][0m
+      [31m  [0m
+      [31m    def top[0m
+      [31m    end[0m
+      [31m  [0m
+      [31m    def about[0m
+      [31m    end[0m
+      [31m[0m
+      [31mNoMethodError:[0m
+      [31m  undefined method `allow_unauthenticated_access' for main[0m
+      [36m# ./app/controllers/homes_controller.rb:1:in `<main>'[0m
+      [36m# ./spec/system/03_finishing_touches_spec.rb:383:in `block (4 levels) in <main>'[0m
+
+Finished in 23.12 seconds (files took 3.78 seconds to load)
+[31m201 examples, 38 failures[0m
+
+Failed examples:
+
+[31mrspec ./spec/system/01_before_login_spec.rb:10[0m [36m# [STEP1] ユーザログイン前のテスト トップ画面のテスト 表示内容の確認 URLが正しい[0m
+[31mrspec ./spec/system/01_before_login_spec.rb:13[0m [36m# [STEP1] ユーザログイン前のテスト トップ画面のテスト 表示内容の確認 Log inリンクが表示される: 青色のボタンの表示が「Log in」である[0m
+[31mrspec ./spec/system/01_before_login_spec.rb:17[0m [36m# [STEP1] ユーザログイン前のテスト トップ画面のテスト 表示内容の確認 Log inリンクの内容が正しい[0m
+[31mrspec ./spec/system/01_before_login_spec.rb:21[0m [36m# [STEP1] ユーザログイン前のテスト トップ画面のテスト 表示内容の確認 Sign upリンクが表示される: 緑色のボタンの表示が「Sign up」である[0m
+[31mrspec ./spec/system/01_before_login_spec.rb:25[0m [36m# [STEP1] ユーザログイン前のテスト トップ画面のテスト 表示内容の確認 Sign upリンクの内容が正しい[0m
+[31mrspec ./spec/system/01_before_login_spec.rb:38[0m [36m# [STEP1] ユーザログイン前のテスト アバウト画面のテスト 表示内容の確認 URLが正しい[0m
+[31mrspec ./spec/system/01_before_login_spec.rb:50[0m [36m# [STEP1] ユーザログイン前のテスト ヘッダーのテスト: ログインしていない場合 表示内容の確認 Bookersリンクが表示される: 左上から1番目のリンクが「Bookers」である[0m
+[31mrspec ./spec/system/01_before_login_spec.rb:54[0m [36m# [STEP1] ユーザログイン前のテスト ヘッダーのテスト: ログインしていない場合 表示内容の確認 Homeリンクが表示される: 左上から2番目のリンクが「Home」である[0m
+[31mrspec ./spec/system/01_before_login_spec.rb:58[0m [36m# [STEP1] ユーザログイン前のテスト ヘッダーのテスト: ログインしていない場合 表示内容の確認 Aboutリンクが表示される: 左上から3番目のリンクが「About」である[0m
+[31mrspec ./spec/system/01_before_login_spec.rb:62[0m [36m# [STEP1] ユーザログイン前のテスト ヘッダーのテスト: ログインしていない場合 表示内容の確認 Sign upリンクが表示される: 左上から4番目のリンクが「Sign up」である[0m
+[31mrspec ./spec/system/01_before_login_spec.rb:66[0m [36m# [STEP1] ユーザログイン前のテスト ヘッダーのテスト: ログインしていない場合 表示内容の確認 Log inリンクが表示される: 左上から5番目のリンクが「Log in」である[0m
+[31mrspec ./spec/system/01_before_login_spec.rb:75[0m [36m# [STEP1] ユーザログイン前のテスト ヘッダーのテスト: ログインしていない場合 リンクの内容を確認 Bookersを押すと、トップ画面に遷移する[0m
+[31mrspec ./spec/system/01_before_login_spec.rb:82[0m [36m# [STEP1] ユーザログイン前のテスト ヘッダーのテスト: ログインしていない場合 リンクの内容を確認 Homeを押すと、トップ画面に遷移する[0m
+[31mrspec ./spec/system/01_before_login_spec.rb:89[0m [36m# [STEP1] ユーザログイン前のテスト ヘッダーのテスト: ログインしていない場合 リンクの内容を確認 Aboutを押すと、アバウト画面に遷移する[0m
+[31mrspec ./spec/system/01_before_login_spec.rb:95[0m [36m# [STEP1] ユーザログイン前のテスト ヘッダーのテスト: ログインしていない場合 リンクの内容を確認 Sign upを押すと、新規登録画面に遷移する[0m
+[31mrspec ./spec/system/01_before_login_spec.rb:101[0m [36m# [STEP1] ユーザログイン前のテスト ヘッダーのテスト: ログインしていない場合 リンクの内容を確認 Log inを押すと、ログイン画面に遷移する[0m
+[31mrspec ./spec/system/01_before_login_spec.rb:116[0m [36m# [STEP1] ユーザログイン前のテスト ユーザ新規登録のテスト 表示内容の確認 URLが正しい[0m
+[31mrspec ./spec/system/01_before_login_spec.rb:119[0m [36m# [STEP1] ユーザログイン前のテスト ユーザ新規登録のテスト 表示内容の確認 「Sign up」と表示される[0m
+[31mrspec ./spec/system/01_before_login_spec.rb:122[0m [36m# [STEP1] ユーザログイン前のテスト ユーザ新規登録のテスト 表示内容の確認 nameフォームが表示される[0m
+[31mrspec ./spec/system/01_before_login_spec.rb:125[0m [36m# [STEP1] ユーザログイン前のテスト ユーザ新規登録のテスト 表示内容の確認 email_addressフォームが表示される[0m
+[31mrspec ./spec/system/01_before_login_spec.rb:128[0m [36m# [STEP1] ユーザログイン前のテスト ユーザ新規登録のテスト 表示内容の確認 passwordフォームが表示される[0m
+[31mrspec ./spec/system/01_before_login_spec.rb:131[0m [36m# [STEP1] ユーザログイン前のテスト ユーザ新規登録のテスト 表示内容の確認 password_confirmationフォームが表示される[0m
+[31mrspec ./spec/system/01_before_login_spec.rb:134[0m [36m# [STEP1] ユーザログイン前のテスト ユーザ新規登録のテスト 表示内容の確認 Sign upボタンが表示される[0m
+[31mrspec ./spec/system/01_before_login_spec.rb:147[0m [36m# [STEP1] ユーザログイン前のテスト ユーザ新規登録のテスト 新規登録成功のテスト 正しく新規登録される[0m
+[31mrspec ./spec/system/01_before_login_spec.rb:150[0m [36m# [STEP1] ユーザログイン前のテスト ユーザ新規登録のテスト 新規登録成功のテスト 新規登録後のリダイレクト先が、新規登録できたユーザの詳細画面になっている[0m
+[31mrspec ./spec/system/01_before_login_spec.rb:258[0m [36m# [STEP1] ユーザログイン前のテスト ユーザログアウトのテスト ログアウト機能のテスト 正しくログアウトできている: ログアウト後のリダイレクト先においてAbout画面へのリンクが存在する[0m
+[31mrspec ./spec/system/01_before_login_spec.rb:261[0m [36m# [STEP1] ユーザログイン前のテスト ユーザログアウトのテスト ログアウト機能のテスト ログアウト後のリダイレクト先が、トップになっている[0m
+[31mrspec ./spec/system/03_finishing_touches_spec.rb:12[0m [36m# [STEP3] 仕上げのテスト サクセスメッセージのテスト ユーザ新規登録成功時[0m
+[31mrspec ./spec/system/03_finishing_touches_spec.rb:28[0m [36m# [STEP3] 仕上げのテスト サクセスメッセージのテスト ユーザログアウト成功時[0m
+[31mrspec ./spec/system/03_finishing_touches_spec.rb:81[0m [36m# [STEP3] 仕上げのテスト 処理失敗時のテスト ユーザ新規登録失敗: nameを1文字にする 新規登録されない[0m
+[31mrspec ./spec/system/03_finishing_touches_spec.rb:84[0m [36m# [STEP3] 仕上げのテスト 処理失敗時のテスト ユーザ新規登録失敗: nameを1文字にする 新規登録画面を表示しており、フォームの内容が正しい[0m
+[31mrspec ./spec/system/03_finishing_touches_spec.rb:90[0m [36m# [STEP3] 仕上げのテスト 処理失敗時のテスト ユーザ新規登録失敗: nameを1文字にする バリデーションエラーが表示される[0m
+[31mrspec ./spec/system/03_finishing_touches_spec.rb:362[0m [36m# [STEP3] 仕上げのテスト アイコンのテスト トップ画面 本のアイコンが表示される[0m
+[31mrspec ./spec/system/03_finishing_touches_spec.rb:374[0m [36m# [STEP3] 仕上げのテスト アイコンのテスト アバウト画面 本のアイコンが表示される[0m
+[31mrspec ./spec/system/03_finishing_touches_spec.rb:386[0m [36m# [STEP3] 仕上げのテスト アイコンのテスト ヘッダー: ログインしていない場合 Homeリンクのアイコンが表示される[0m
+[31mrspec ./spec/system/03_finishing_touches_spec.rb:389[0m [36m# [STEP3] 仕上げのテスト アイコンのテスト ヘッダー: ログインしていない場合 Aboutリンクのアイコンが表示される[0m
+[31mrspec ./spec/system/03_finishing_touches_spec.rb:392[0m [36m# [STEP3] 仕上げのテスト アイコンのテスト ヘッダー: ログインしていない場合 Sign upリンクのアイコンが表示される[0m
+[31mrspec ./spec/system/03_finishing_touches_spec.rb:395[0m [36m# [STEP3] 仕上げのテスト アイコンのテスト ヘッダー: ログインしていない場合 Log inリンクのアイコンが表示される[0m
+
