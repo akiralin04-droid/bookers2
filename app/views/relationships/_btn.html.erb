@@ -1,0 +1,9 @@
+<% if current_user != user %>
+  <% if current_user.following?(user) %>
+    <!-- フォロー外すボタン -->
+    <%= link_to "フォロー外す", user_relationships_path(user.id), data: { turbo_method: :delete }, class: "btn btn-info" %>
+  <% else %>
+    <!-- フォローするボタン -->
+    <%= link_to "フォローする", user_relationships_path(user.id), data: { turbo_method: :post }, class: "btn btn-success" %>
+  <% end %>
+<% end %>

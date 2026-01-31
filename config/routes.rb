@@ -26,5 +26,13 @@ Rails.application.routes.draw do
 
   # 6. Usersコントローラー（ユーザー機能）
   # ※ユーザー一覧、詳細、編集、更新があればOK（作成と削除は認証機能が担当するため）
-  resources :users, only: [:index, :show, :edit, :update]
+  resources :users, only: [:index, :show, :edit, :update] do
+    # フォロー機能（create, destroy）
+    resource :relationships, only: [:create, :destroy]
+    
+    # フォロー一覧・フォロワー一覧画面へのルーティング
+    get 'followings' => 'relationships#followings', as: 'followings'
+    get 'followers' => 'relationships#followers', as: 'followers'
+  end
+  
 end

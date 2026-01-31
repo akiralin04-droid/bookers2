@@ -28,6 +28,15 @@
                 <%= user.name %>
               </td>
               <td>
+                フォロー数: <%= user.followings.count %>
+              </td>
+              <td>
+                フォロワー数: <%= user.followers.count %>
+              </td>
+              <td>
+                <%= render 'relationships/btn', user: user %>
+              </td>
+              <td>
                 <!-- 詳細画面へのリンク -->
                 <%= link_to "Show", user_path(user) %>
               </td>
