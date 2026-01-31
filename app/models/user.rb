@@ -22,5 +22,10 @@ class User < ApplicationRecord
   # 2. 自己紹介: 最大50文字
   validates :introduction, length: { maximum: 50 }
 
+  # ユーザーはたくさんのいいねを持っている
+  has_many :favorites, dependent: :destroy
+
+  has_many :book_comments, dependent: :destroy
+
 end
 

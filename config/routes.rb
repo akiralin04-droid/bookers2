@@ -15,7 +15,14 @@ Rails.application.routes.draw do
   resource :registration, only: [:new, :create]
 
   # 5. Booksコントローラー（投稿機能：CRUDすべて）
-  resources :books
+  resources :books do
+    # いいね機能のルーティング（createとdestroyのみ）
+    # 単数形 resource にすると、/:book_id/favorites というURLになりIDを含まないので扱いやすいです
+    resource :favorites, only: [:create, :destroy]
+
+    resources :book_comments, only: [:create, :destroy]
+
+  end
 
   # 6. Usersコントローラー（ユーザー機能）
   # ※ユーザー一覧、詳細、編集、更新があればOK（作成と削除は認証機能が担当するため）
