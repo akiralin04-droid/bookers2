@@ -56,20 +56,12 @@
             <td><%= link_to @book.title, book_path(@book) %></td>
             <td><%= @book.body %></td>
             
-            <td>
-              <% if @book.favorited_by?(current_user) %>
-                <%= link_to book_favorites_path(@book), data: { turbo_method: :delete }, class: "text-danger" do %>
-                  <i class="fas fa-heart"></i> <%= @book.favorites.count %>
-                <% end %>
-              <% else %>
-                <%= link_to book_favorites_path(@book), data: { turbo_method: :post }, class: "text-primary" do %>
-                  <i class="fas fa-heart"></i> <%= @book.favorites.count %>
-                <% end %>
-              <% end %>
+            <td id="favorite_btn_<%= @book.id %>">
+              <%= render 'favorites/btn', book: @book %>
             </td>
 
-            <td>
-                コメント数：<%= @book.book_comments.count %>
+            <td id="comment_count">
+              コメント数：<%= @book.book_comments.count %>
             </td>
 
             <!-- ログインしているユーザー本人の投稿なら、編集・削除ボタンを表示 -->
@@ -87,29 +79,12 @@
       </table>
 
       <!-- コメント一覧 -->
-      <table class="table">
-        <tbody>
-          <% @book.book_comments.each do |book_comment| %>
-            <tr>
-              <td>
-                <%= link_to user_path(book_comment.user) do %>
-                  <%= image_tag book_comment.user.get_profile_image(50,50) %><br>
-                  <%= book_comment.user.name %>
-                <% end %>
-              </td>
-              <td><%= book_comment.comment %></td>
-              <td>
-                <% if book_comment.user == current_user %>
-                  <%= link_to "Destroy", book_book_comment_path(book_comment.book, book_comment), data: { turbo_method: :delete }, class: "btn btn-danger btn-sm" %>
-                <% end %>
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
+      <div id="comment_index">
+        <%= render "book_comments/index", book: @book %>
+      </div>
 
       <!-- コメント投稿フォーム -->
-      <div class="mt-4">
+      <div class="mt-4" id="comment_form"> <!-- ID "comment_form" を追加 -->
         <%= form_with model: [@book, BookComment.new] do |f| %>
           <div class="form-group">
             <%= f.text_area :comment, rows: '5', class: "form-control", placeholder: "コメントをここに" %>

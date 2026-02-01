@@ -1,0 +1,11 @@
+<% if book.favorited_by?(current_user) %>
+  <!-- 削除ボタン -->
+  <%= link_to book_favorites_path(book), data: { turbo_method: :delete }, class: "text-danger" do %>
+    <i class="fas fa-heart"></i> <%= book.favorites.count %>
+  <% end %>
+<% else %>
+  <!-- 登録ボタン -->
+  <%= link_to book_favorites_path(book), data: { turbo_method: :post }, class: "text-primary" do %>
+    <i class="far fa-heart"></i> <%= book.favorites.count %>
+  <% end %>
+<% end %>

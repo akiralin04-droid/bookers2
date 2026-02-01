@@ -41,18 +41,8 @@
                 <%= link_to book.title, book_path(book.id) %>
               </td>
               <td><%= book.body %></td>
-              <td>
-                <% if book.favorited_by?(current_user) %>
-                  <!-- いいね済み：赤色で削除リンク -->
-                  <%= link_to book_favorites_path(book), data: { turbo_method: :delete }, class: "text-danger" do %>
-                    <i class="fas fa-heart"></i> <%= book.favorites.count %>
-                  <% end %>
-                <% else %>
-                  <!-- まだ：青色（または通常色）で登録リンク -->
-                  <%= link_to book_favorites_path(book), data: { turbo_method: :post }, class: "text-primary" do %>
-                    <i class="fas fa-heart"></i> <%= book.favorites.count %>
-                  <% end %>
-                <% end %>
+              <td id="favorite_btn_<%= book.id %>">
+                <%= render 'favorites/btn', book: book %>
               </td>
               <td>
                 コメント数：<%= book.book_comments.count %>

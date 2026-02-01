@@ -1,0 +1,21 @@
+<!-- 1. コメント一覧を最新にする -->
+<%= turbo_stream.replace "comment_index" do %>
+  <%= render "book_comments/index", book: @book %>
+<% end %>
+
+<!-- 2. コメント件数を最新にする -->
+<%= turbo_stream.update "comment_count" do %>
+  コメント数：<%= @book.book_comments.count %>
+<% end %>
+
+<!-- 3. フォームを空（新品）にする -->
+<%= turbo_stream.replace "comment_form" do %>
+  <div class="mt-4" id="comment_form">
+    <%= form_with model: [@book, @book_comment] do |f| %>
+      <div class="form-group">
+        <%= f.text_area :comment, rows: '5', class: "form-control", placeholder: "コメントをここに" %>
+      </div>
+      <%= f.submit "送信", class: "mt-2" %>
+    <% end %>
+  </div>
+<% end %>
