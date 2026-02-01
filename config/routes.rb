@@ -34,5 +34,8 @@ Rails.application.routes.draw do
     get 'followings' => 'relationships#followings', as: 'followings'
     get 'followers' => 'relationships#followers', as: 'followers'
   end
-  
+
+  # 検索機能のルーティング
+  get "search" => "searches#search"
+
 end
