@@ -55,6 +55,23 @@
             </td>
             <td><%= link_to @book.title, book_path(@book) %></td>
             <td><%= @book.body %></td>
+
+            <td>
+              <div id="star_<%= @book.id %>"></div>
+              <script>
+                $(document).ready(function() {
+                  $('#star_<%= @book.id %>').raty({
+                    size: 36,
+                    readOnly: true,
+                    score: <%= @book.star || 0 %>,
+                    starType: 'i',
+                    starOn: 'fas fa-star text-warning',
+                    starOff: 'far fa-star text-muted',
+                    starHalf: 'fas fa-star-half-alt text-warning', // 半分の星（必要なら）
+                  });
+                });
+              </script>
+            </td>
             
             <td id="favorite_btn_<%= @book.id %>">
               <%= render 'favorites/btn', book: @book %>
