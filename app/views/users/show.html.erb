@@ -30,6 +30,15 @@
                 <!-- 本のタイトル（クリックで詳細へ） -->
                 <%= link_to book.title, book_path(book.id) %>
               </td>
+              
+              <!-- ★Category -->
+            <td>
+              <% if @book.category.present? %>
+                <%= link_to @book.category, books_path(category: @book.category) %>
+              <% end %>
+            </td>
+
+              <!-- ★Opinion（感想/Body） -->
               <td><%= book.body %></td>
 
               <!-- ★★★ ↓↓↓ 星評価の表示（ここから） ↓↓↓ ★★★ -->
@@ -51,7 +60,7 @@
                 });
               </script>
             </td>
-            
+
             </tr>
           <% end %>
         </tbody>

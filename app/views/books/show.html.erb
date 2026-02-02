@@ -54,6 +54,14 @@
               <% end %>
             </td>
             <td><%= link_to @book.title, book_path(@book) %></td>
+
+            <td>
+              <!-- ★★★ 追加 ★★★ -->
+              <% if @book.category.present? %>
+                <%= link_to @book.category, books_path(category: @book.category) %>
+              <% end %>
+            </td>
+
             <td><%= @book.body %></td>
 
             <td>

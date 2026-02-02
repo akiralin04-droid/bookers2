@@ -20,11 +20,18 @@
     <!-- ★★★ 右側：Books一覧 ★★★ -->
     <div class="col-md-8 offset-md-1">
       <h2>Books</h2>
+      <p>
+        <%= link_to '新しい順', books_path(latest: "true") %>
+        | 
+        <%= link_to '評価の高い順', books_path(rating: "true") %>
+      </p>
+
       <table class="table table-hover table-inverse">
         <thead>
           <tr>
             <th></th>
             <th>Title</th>
+            <th>Category</th> <!-- 追加 -->
             <th>Opinion</th>
             <th>Rate</th> 
             <th colspan="3"></th>
@@ -43,6 +50,15 @@
               <td>
                 <%= link_to book.title, book_path(book.id) %>
               </td>
+
+              <td>
+                <!-- ★★★ 追加：カテゴリへのリンク ★★★ -->
+                <% if book.category.present? %>
+                  <%= link_to book.category, books_path(category: book.category) %>
+                <% end %>
+              </td>
+
+              <!-- ★Opinion（感想/Body） -->
               <td><%= book.body %></td>
 
               <td id="favorite_btn_<%= book.id %>">

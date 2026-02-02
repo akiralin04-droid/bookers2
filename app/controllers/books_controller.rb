@@ -1,7 +1,26 @@
 class BooksController < ApplicationController
   def index
     @book = Book.new           # 新規投稿用
-    @books = Book.all          # 一覧表示用
+
+    # params[:sort] の中身によって並び順を変える
+    if params[:latest]
+      # 新しい順（作成日時が新しい順）
+      @books = Book.latest
+
+    elsif params[:rating]
+      # 評価が高い順（星の数が多い順）
+      @books = Book.rating
+
+    elsif params[:category] # ★ここを追加！
+      # カテゴリ検索（完全一致で探す）
+      @category = params[:category]
+      @books = Book.where(category: @category)
+
+    else
+      # 指定がなければ通常通り（古い順、またはID順）
+      @books = Book.all
+    end
+
     @user = current_user       # 左側のユーザー情報表示用
   end
 
@@ -76,6 +95,6 @@ class BooksController < ApplicationController
   private
 
   def book_params
-    params.require(:book).permit(:title, :body, :star)
+    params.require(:book).permit(:title, :body, :star, :category)
   end
 end

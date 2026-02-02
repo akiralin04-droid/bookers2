@@ -29,5 +29,9 @@ class Book < ApplicationRecord
       Book.where('title LIKE ?', '%' + content + '%')
     end
   end
+
+  # 並び替えの便利メソッド（スコープ）を定義
+  scope :latest, -> { order(created_at: :desc) }
+  scope :rating, -> { order(star: :desc) }
   
 end
