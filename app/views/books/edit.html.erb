@@ -21,6 +21,38 @@
           <%= f.label :title %>
           <%= f.text_field :title, class: "form-control" %>
         </div>
+        
+        <!-- ★★★ 追加：カテゴリーの入力欄 ★★★ -->
+        <div class="form-group">
+          <%= f.label :category %>
+          <%= f.text_field :category, class: "form-control" %>
+        </div>
+
+        <!-- ★★★ 追加：評価（星）の変更フォーム ★★★ -->
+        <div class="form-group" id="star">
+          <%= f.label :star %>
+          <%= f.hidden_field :star, id: :review_star, class: 'form-control' %>
+          <div id="post_raty"></div>
+        </div>
+        <script>
+          $(document).ready(function() {
+            // 編集画面なので、既存の星を表示するために空にする
+            $('#post_raty').empty();
+            
+            $('#post_raty').raty({
+              scoreName: 'book[star]',
+              // ★ここがポイント！保存されている値をセットする
+              score: <%= @book.star || 0 %>,
+              
+              // Font Awesome設定
+              starType: 'i',
+              starOn: 'fas fa-star text-warning',
+              starOff: 'far fa-star text-muted',
+              starHalf: 'fas fa-star-half-alt text-warning',
+            });
+          });
+        </script>
+
         <div class="form-group">
           <%= f.label :opinion %>
           <%= f.text_area :body, class: "form-control" %>
